@@ -24,7 +24,7 @@
         logining: false,
         ruleForm2: {
           account: 'admin',
-          checkPass: '123456'
+          checkPass: 'admin'
         },
         rules2: {
           account: [
@@ -49,9 +49,10 @@
           if (valid) {
             //_this.$router.replace('/table');
             this.logining = true;
-            //NProgress.start();
+            //NProgress.start();这里是组装form参数
             var loginParams = { username: this.ruleForm2.account, password: this.ruleForm2.checkPass };
-            requestLogin(loginParams).then(data => {
+            //这里是从本地mock获取
+            /*requestLogin(loginParams).then(data => {
               this.logining = false;
               //NProgress.done();
               let { msg, code, user } = data;
@@ -64,7 +65,33 @@
                 sessionStorage.setItem('user', JSON.stringify(user));
                 this.$router.push({ path: '/table' });
               }
-            });
+            });*/
+            //使用axios发送请求
+            this.$http.post("/employee/login",loginParams).then(
+                    d => {
+                      console.debug(d);
+                      this.logining = false;
+                      //NProgress.done();
+                      let { msg, success, object } = d.data;
+                      // {"msg":"TaPo((","object":{},"success":false}
+                      // { success: true, msg: "登录成功", object: null }
+                      if (!success) {
+                        this.$message({
+                          message: msg,
+                          type: 'error'
+                        });
+                      } else {
+                        // session的设置
+                        //返回的object是null,那么存在session中的就是null,然后在main.js:如果session中
+                        //没有user,会直接又走到登录路由
+                        if(object==null){
+                          object ={"name":"admin"};
+                        }
+                        sessionStorage.setItem('user', JSON.stringify(object));
+                        this.$router.push({ path: '/' });
+                      }
+                    }
+            )
           } else {
             console.log('error submit!!');
             return false;

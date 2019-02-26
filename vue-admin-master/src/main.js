@@ -10,15 +10,26 @@ import Vuex from 'vuex'
 //import NProgress from 'nprogress'
 //import 'nprogress/nprogress.css'
 import routes from './routes'
-import Mock from './mock'
-Mock.bootstrap();
+//import Mock from './mock'
+//Mock.bootstrap();
 import 'font-awesome/css/font-awesome.min.css'
+import axios from 'axios'
+
 
 Vue.use(ElementUI)
 Vue.use(VueRouter)
 Vue.use(Vuex)
 
 //NProgress.configure({ showSpinner: false });
+
+//axios的全局定义，这里是从easymock中拿取假数据
+//axios.defaults.baseURL="https://www.easy-mock.com/mock/5c74c82b261e0e3c3307e425/xinyuan/employee"
+
+//这里是直接访问后台，由于存在跨域问题，后台采用cors解决
+axios.defaults.baseURL="http://www.eureka-7001.com:9527/xinyuan/employee";
+
+Vue.prototype.$http = axios //原型
+Vue.config.productionTip = false
 
 const router = new VueRouter({
   routes
