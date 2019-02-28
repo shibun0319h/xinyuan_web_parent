@@ -26,7 +26,7 @@ Vue.use(Vuex)
 //axios.defaults.baseURL="https://www.easy-mock.com/mock/5c74c82b261e0e3c3307e425/xinyuan/employee"
 
 //这里是直接访问后台，由于存在跨域问题，后台采用cors解决
-axios.defaults.baseURL="http://www.eureka-7001.com:9527/xinyuan/employee";
+axios.defaults.baseURL="http://www.eureka-7001.com:9527/xinyuan";
 
 Vue.prototype.$http = axios //原型
 Vue.config.productionTip = false

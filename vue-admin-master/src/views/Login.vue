@@ -67,9 +67,8 @@
               }
             });*/
             //使用axios发送请求
-            this.$http.post("/employee/login",loginParams).then(
+            this.$http.post("/employee/employee/login",loginParams).then(
                     d => {
-                      console.debug(d);
                       this.logining = false;
                       //NProgress.done();
                       let { msg, success, object } = d.data;
